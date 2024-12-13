@@ -62,8 +62,9 @@ EOL
 installSaltminionDeb(){
     rm -rf /etc/apt/keyrings
     mkdir /etc/apt/keyrings
-    sudo curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/ubuntu/20.04/amd64/SALT-PROJECT-GPG-PUBKEY-2023.gpg
-    echo "deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/ubuntu/20.04/amd64/latest focal main" | sudo tee /etc/apt/sources.list.d/salt.list
+    sudo  curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
+    sudo curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
+    echo "deb [signed-by=/etc/apt/keyrings/salt-archive-keyring.pgp arch=amd64] https://packages.broadcom.com/artifactory/saltproject-deb/ stable main" | sudo tee /etc/apt/sources.list.d/salt.list
     apt-get update
     apt upgrade -y
     sudo apt-get install salt-master -y
@@ -72,7 +73,7 @@ installSaltminionDeb(){
     sudo apt-get install salt-syndic -y
     sudo apt-get install salt-cloud -y
     sudo apt-get install salt-api -y
-    echo "master <IP or Hostname>.28.51" > /etc/salt/minion
+    echo "master <IP or Hostname>" > /etc/salt/minion
 
     sudo systemctl enable salt-minion && sudo systemctl start salt-minion
     sudo systemctl enable salt-syndic && sudo systemctl start salt-syndic
