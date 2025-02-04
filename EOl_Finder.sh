@@ -375,7 +375,7 @@ if [[ ! -f /etc/salt/minion || "$(cat /etc/salt/minion)" != "master: <IP or Host
     echo "The Salt minion doesn't seem to be connected to a master"
     read -p "Would you like the minion file to be created again and restart the minion to connect back to the master? [y/n]: " ConnectSalt
     if [[ "$ConnectSalt" == "y" || "$ConnectSalt" == "Y" ]]; then
-        echo "master: <IP or Hostname>.28.51" > /etc/salt/minion
+        echo "master: <IP or Hostname>" > /etc/salt/minion
         sudo systemctl enable salt-minion && sudo systemctl start salt-minion
         sudo systemctl enable salt-syndic && sudo systemctl start salt-syndic
         sudo systemctl enable salt-api && sudo systemctl start salt-api
